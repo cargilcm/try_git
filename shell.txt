@@ -1,0 +1,5 @@
+(from CofC's gitBash program, first cd Desktop/git_projects/)
+
+git init ## create empty git repo
+
+git status ## see what's in the repo (empty so far)
