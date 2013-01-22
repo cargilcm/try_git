@@ -3,3 +3,28 @@
 git init ## create empty git repo
 
 git status ## see what's in the repo (empty so far)
+
+git add shell.txt
+
+git commit -m 'Add the git_projects repo and initial shell.txt file' # denote the commit you're making
+
+git add shell.txt
+
+git log #
+
+git remote add origin git@github.com:cargilcm/try_git.git #  To push our local repo to the GitHub server we'll need to add a remote repository.
+
+git diff --staged # to see the changes you just staged.
+
+git reset octodog.txt #  removing octodog.txt.
+
+git checkout -- octocat.txt # Files can be changed back to how they were at the last commit by using the command: git checkout -- <target>. Go ahead and get rid of all the changes since the last commit for octocat.txt
+
+git branch clean_up # create a branch called clean_up
+
+git checkout master # copy (or merge) your changes from the clean_up branch back into the master branch. Go ahead and checkout the master branch:
+
+git merge clean_up # merge your changes from the clean_up branch into the master branch. 
+
+git branch -d clean_up # use git branch -d <branch name> to delete a branch.
+
