@@ -28,3 +28,5 @@ git merge clean_up # merge your changes from the clean_up branch into the master
 
 git branch -d clean_up # use git branch -d <branch name> to delete a branch.
 
+git confi­g --glo­bal user.name "Chri­s Cargi­le2"#Use the gl­obal optio­n to set y­our user n­ame across­ all your ­repos
+
