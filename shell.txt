@@ -30,3 +30,14 @@ git branch -d clean_up # use git branch -d <branch name> to delete a branch.
 
 git confi­g --glo­bal user.name "Chri­s Cargi­le2"#Use the gl­obal optio­n to set y­our user n­ame across­ all your ­repos
 
+
+# from CofC computers:
+# 1) copy id_rsa and id_rsa.pub to ~/.ssh
+# 2) ssh -T git@github.com
+# 3) if successful, git init
+# 4) git remote add newUser git@github.com:cargilcm/repo_name
+# 5) git pull git@github.com:cargilcm/try_git.git
+# 6) git add file.txt
+# 7) git commit -m "message" # a commit message
+# 8) git status
+# 9) git push newUser
