@@ -40,4 +40,4 @@ git confi­g --glo­bal user.name "Chri­s Cargi­le2"#Use the gl­obal optio­n
 # 6) git add file.txt
 # 7) git commit -m "message" # a commit message
 # 8) git status
-# 9) git push newUser
+# 9) git push newUser (or git push newuser master if you get an error: 'no refs in common. nothing specified: doing nothing')
