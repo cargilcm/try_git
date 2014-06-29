@@ -1,0 +1,52 @@
+<head>
+<meta charset="ascii">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+var httpGet="";
+var output="";
+var regExHREF= new RegExp("href=\"[a-zA-Z0-9_*+-]+[./]+[a-zA-Z0-9_*+-]+[.]+[a-zA-Z0-9]+","g");
+// regExHREF is not a foolproof matcher examples that work are: "xyz/xyz.zyx", "xyz.zyx", "xyz.syz/xyz.mp3"
+// example that wouldn't is maybe: 'xyz/xyz/xyz.zyx"
+var regExFolders=new RegExp("href=\"[a-zA-Z0-9_]+/\"","g");
+var regExFiles=new RegExp("href=\"[a-zA-Z0-9_]+[.a-zA-Z0-9_]+\"","g");
+var res=[];
+
+function loader(){
+console.log("html=\n");
+httpGet = $.get("archives.htm", function( my_var ){
+output=my_var;
+/*while((file=regExFiles.exec(output))!=null){
+res.push(file);
+}; //append 'Files' to the array
+while((folder=regExFolders.exec(output))!=null){
+res.push(folder);
+};*/ //append 'Folders' to the array
+while((href=regExHREF.exec(output))!=null){
+res.push(href);
+}; //append 'HREF' matches to the array
+
+document.getElementById("body").innerHTML="";
+var i=0;
+/** recurse directory items and substring beyond href=" */
+res.forEach(function(ar,ind,el){
+var vb = res[ind].toString();
+var vb2 = vb.substr(vb.search("\""));
+vb2.replace(vb2[0],"");
+
+console.log(i++ +")"+vb2+"\n");
+displayHTML(i + ") <a href=\"/pipermail/webapps_charlestonwebapps.com/", vb2);
+});
+
+});}
+
+function displayHTML(prefix,arg2){
+// value=value.replace(value[0],"");
+prefix=prefix.replace(prefix[prefix.length],"");	
+arg2=arg2.replace(arg2[0],"");
+var value= prefix + arg2 + "\">" + arg2 + "</a><BR>";	
+document.getElementById("body").innerHTML=document.getElementById("body").innerHTML+value;
+console.log(value);
+}
+
+</script>
+</head>
