@@ -1,0 +1,65 @@
+<html>
+<meta charset="UTF-8"></meta>
+<head>
+
+ <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+
+var httpGet="";
+var output="";
+var matchFolders=new RegExp("href=\"[a-zA-Z0-9_]+/\"","g");
+var matchFiles=new RegExp("<a href=\".+(?=\").+(?:)(?=</a>)</a>","g");
+var i=0;
+var res=[];
+var body="";
+var finished=false;
+var URL=location.search.substring(1,location.search.length);
+function displayHTML(value){
+	document.getElementById("body").innerHTML+=value;
+	//console.log(value);
+}
+
+function loader(){
+	if(URL=="")
+		URL="/music/wedding/";
+	httpGet = $.get(URL, 
+		function( my_var ){
+			output=my_var;
+			//console.log(output);
+			while((adder=matchFiles.exec(output))!=null){
+				res.push(adder);		
+			};
+	//append 'Files' result to the array
+	body=document.getElementById("body").innerHTML="";
+	displayHTML("\"");
+	res.forEach(function(ar,ind,el){
+		var vbl = res[ind];
+		var vbl2 = vbl.toString().substr(vbl.toString().indexOf("\"")+1,vbl.toString().length);
+		URL=URL.toString();
+		vbl="<a href=\"".concat(URL).concat(vbl2);
+		console.log(vbl2+"\n");
+		if(ind>2){
+			if(!vbl.toString().endsWith("\/</a>") && !vbl.toString().endsWith(".zip</a>")){
+				displayHTML(vbl+", ");
+			};
+		};
+		}).done(function(){
+			displayHTML("\"");
+			console.log('finished');
+		});
+	});
+	};/*done(	function(){
+			console.log('f finished #2');
+			body=document.getElementById('body').innerHTML;
+			console.log(body);
+			//document.write(body.toString());
+			}
+		);
+};*/
+</script>
+</head>
+<body onload="javascript:loader();" id="body">
+<div>I should try adding <a href="http://www.w3schools.com/js/js_timing.asp">window.setTimeout()</a> to delay document.ready()-ness thereby enabling .ajax GET on this page to set var ([])songs=document....innerHTML;
+
+<BR><BR>Until then, there's <button onclick="javascript:loader();">click to see files</button>
+</body>
