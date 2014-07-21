@@ -13,17 +13,21 @@ var i=0;
 var res=[];
 var body="";
 var finished=false;
+var vbl;
 var URL=location.search.substring(1,location.search.length);
 function displayHTML(value){
 	document.getElementById("body").innerHTML+=value;
 	//console.log(value);
 }
 
+var endingAnchor="\/</a>";
+var endingZip=".zip</a>";
 function loader(){
-	if(URL=="")
+	if(URL==="")
 		URL="/music/wedding/";
 	httpGet = $.get(URL, 
 		function( my_var ){
+			console.log("got "+URL);
 			output=my_var;
 			//console.log(output);
 			while((adder=matchFiles.exec(output))!=null){
@@ -32,23 +36,38 @@ function loader(){
 	//append 'Files' result to the array
 	body=document.getElementById("body").innerHTML="";
 	displayHTML("\"");
-	res.forEach(function(ar,ind,el){
-		var vbl = res[ind];
+	var lastEl=res.length;
+	res.every(function(item,ind,arr){
+		vbl = item;
+		vbl=vbl[0];
+		//console.log(vbl+"\n");
 		var vbl2 = vbl.toString().substr(vbl.toString().indexOf("\"")+1,vbl.toString().length);
 		URL=URL.toString();
-		vbl="<a href=\"".concat(URL).concat(vbl2);
+		vbl="<a href=\"".concat(URL).concat("\/").concat(vbl2);
+		vbl=vbl.toString();
 		console.log(vbl2+"\n");
+		var boolout= (!(vbl.lastIndexOf(endingZip)>=1 && vbl.lastIndexOf(endingZip)===vbl.length-endingZip.length))
+		&& (!(vbl.lastIndexOf(endingAnchor)>=1 && vbl.lastIndexOf(endingAnchor)===vbl.length-endingAnchor.length)) 
+		
+		// index is of all elements in res[] - these happen to be []'s themselves but vbl deferences the first element, above
 		if(ind>2){
-			if(!vbl.toString().endsWith("\/</a>") && !vbl.toString().endsWith(".zip</a>")){
+			console.log("vbl["+ind+"]:"+ vbl+",res: "+boolout);
+			if(boolout){
 				displayHTML(vbl+", ");
+			//	console.log("in ind>2");
 			};
 		};
-		}).done(function(){
+		if(ind===lastEl-1){
 			displayHTML("\"");
 			console.log('finished');
-		});
+		};
+		//console.log("vbl["+ind+"]:"+ vbl+",res: "+boolout);
+		return true;
+		})
 	});
-	};/*done(	function(){
+	};
+	//done on forEach() removed b/c while FF handles it, the rest see it's completion as undefined
+	/*done(	function(){
 			console.log('f finished #2');
 			body=document.getElementById('body').innerHTML;
 			console.log(body);
@@ -59,7 +78,4 @@ function loader(){
 </script>
 </head>
 <body onload="javascript:loader();" id="body">
-<div>I should try adding <a href="http://www.w3schools.com/js/js_timing.asp">window.setTimeout()</a> to delay document.ready()-ness thereby enabling .ajax GET on this page to set var ([])songs=document....innerHTML;
-
-<BR><BR>Until then, there's <button onclick="javascript:loader();">click to see files</button>
 </body>
